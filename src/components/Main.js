@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 
 import nba from "../nba-client";
-import ShotShort from "./ShotChart";
+import DataViewContainer from "./DataViewContainer";
 
 class Main extends React.Component {
     constructor() {
@@ -17,14 +17,14 @@ class Main extends React.Component {
         window.nba = nba;
         console.log(nba.findPlayer("Stephen Curry"));
         nba.stats
-            .playerInfo({ PlayerID: nba.findPlayer("Lebron James").playerId })
+            .playerInfo({ PlayerID: nba.findPlayer("Stephen Curry").playerId })
             .then((info) => {
                 console.log(info);
-                const playerInfo = Object.assign(
+                const playInfo = Object.assign(
                     info.commonPlayerInfo[0],
                     info.playerHeadlineStats[0]
                 );
-                this.setState({ playerInfo });
+                this.setState({ playerInfo: playInfo });
             });
     }
 
@@ -32,7 +32,7 @@ class Main extends React.Component {
         return (
             <div className="main">
                 <Profile playerInfo={this.state.playerInfo} />
-                <ShotShort />
+                <DataViewContainer playerId={this.state.playerId} />
             </div>
         );
     }
